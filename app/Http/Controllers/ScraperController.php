@@ -19,15 +19,15 @@ class ScraperController extends Controller
 
    public function scraper()
    {
-       try{
+    //    try{
             $data = $this->getData('https://vidnext.net/');
             Scraper::insert($data);
         
             return redirect()->route('index')->with('success','Data successfully scraped');
-       }catch(\Exception $e){
-           return redirect()->route('index')->with('error','Something went wrong');
+    //    }catch(\Exception $e){
+    //        return redirect()->route('index')->with('error','Something went wrong');
            
-       }
+    //    }
 
    }
 
@@ -35,13 +35,14 @@ class ScraperController extends Controller
 
    private function getData(string $url)
    {
+        
         $client = new Client();
         $page = $client->request('GET', $url);
 
-        $page->filter('.video-block')->each(function($item){
+        $page->filter('.video-block')->each(function($item) use ($url){
             $arr = [
                 'title' => $item->filter('.name')->text(),
-                'link'  => $item->filter('a',0)->attr('href')
+                'link'  => $url.$item->filter('a',0)->attr('href')
             ];
             
             array_push($this->results, $arr);

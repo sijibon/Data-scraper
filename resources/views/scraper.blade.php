@@ -42,7 +42,7 @@
                 <tbody>
                     <tr>
                         <th>{{$value->title}}</th>
-                        <th>{{$value->link}}</th>
+                        <th><a href="{{$value->link}}" target="_blank">{{$value->link}}</a></th>
                     </tr>
                 </tbody>         
               @endforeach   
